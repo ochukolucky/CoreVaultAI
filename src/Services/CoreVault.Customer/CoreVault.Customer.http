@@ -1,0 +1,6 @@
+@CoreVault.Customer_HostAddress = http://localhost:5171
+
+GET {{CoreVault.Customer_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

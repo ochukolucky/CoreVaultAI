@@ -1,0 +1,6 @@
+@CoreVault.AgenticWorkflow_HostAddress = http://localhost:5003
+
+GET {{CoreVault.AgenticWorkflow_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

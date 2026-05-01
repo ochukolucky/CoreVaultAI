@@ -1,0 +1,6 @@
+@CoreVault.AIIntelligence_HostAddress = http://localhost:5062
+
+GET {{CoreVault.AIIntelligence_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

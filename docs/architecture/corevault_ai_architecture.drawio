@@ -1,0 +1,163 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="CoreVault AI Architecture" id="8wjLqIGDkfeWDMqdaI9t">
+    <mxGraphModel dx="774" dy="512" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="r1c1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#333333;strokeColor=none;fontColor=#ffffff;fontStyle=1" value="Web App" vertex="1">
+          <mxGeometry height="40" width="100" x="60" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="r1c2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#333333;strokeColor=none;fontColor=#ffffff;fontStyle=1" value="Mobile App" vertex="1">
+          <mxGeometry height="40" width="100" x="180" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="r1c3" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#333333;strokeColor=none;fontColor=#ffffff;fontStyle=1" value="External APIs" vertex="1">
+          <mxGeometry height="40" width="100" x="300" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="r1c4" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#333333;strokeColor=none;fontColor=#ffffff;fontStyle=1" value="Admin Portal" vertex="1">
+          <mxGeometry height="40" width="100" x="420" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="r2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#312e7c;strokeColor=none;fontColor=#ffffff;fontStyle=1" value="API GATEWAY &amp; AUTHENTICATION LAYER (OIDC / OAuth2)" vertex="1">
+          <mxGeometry height="45" width="550" x="60" y="110" as="geometry" />
+        </mxCell>
+        <mxCell id="r3c1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0d3d2e;strokeColor=none;fontColor=#ffffff;fontStyle=1" value="User Management" vertex="1">
+          <mxGeometry height="50" width="120" x="60" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="r3c2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0d3d2e;strokeColor=none;fontColor=#ffffff;fontStyle=1" value="Vault Orchestrator" vertex="1">
+          <mxGeometry height="50" width="120" x="195" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="r3c3" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0d3d2e;strokeColor=none;fontColor=#ffffff;fontStyle=1" value="AI Agent Manager" vertex="1">
+          <mxGeometry height="50" width="120" x="330" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="r3c4" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0d3d2e;strokeColor=none;fontColor=#ffffff;fontStyle=1" value="Task Scheduler" vertex="1">
+          <mxGeometry height="50" width="120" x="465" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="r3c5" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0d3d2e;strokeColor=none;fontColor=#ffffff;fontStyle=1" value="Compliance Hub" vertex="1">
+          <mxGeometry height="50" width="120" x="600" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="r4" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#603800;strokeColor=none;fontColor=#ffffff;fontStyle=1" value="COREVAULT AI INFERENCE &amp; REASONING BUS" vertex="1">
+          <mxGeometry height="40" width="660" x="60" y="270" as="geometry" />
+        </mxCell>
+        <mxCell id="r5c1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#6a2e18;strokeColor=none;fontColor=#ffffff;fontStyle=1" value="NLP Engine (LLM)" vertex="1">
+          <mxGeometry height="55" width="130" x="60" y="340" as="geometry" />
+        </mxCell>
+        <mxCell id="r5c2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#6a2e18;strokeColor=none;fontColor=#ffffff;fontStyle=1" value="Vector Embeddings" vertex="1">
+          <mxGeometry height="55" width="130" x="210" y="340" as="geometry" />
+        </mxCell>
+        <mxCell id="r5c3" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#6a2e18;strokeColor=none;fontColor=#ffffff;fontStyle=1" value="Pattern Recognition" vertex="1">
+          <mxGeometry height="55" width="130" x="360" y="340" as="geometry" />
+        </mxCell>
+        <mxCell id="r5c4" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#6a2e18;strokeColor=none;fontColor=#ffffff;fontStyle=1" value="Risk Scoring" vertex="1">
+          <mxGeometry height="55" width="130" x="510" y="340" as="geometry" />
+        </mxCell>
+        <mxCell id="r5c5" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#6a2e18;strokeColor=none;fontColor=#ffffff;fontStyle=1" value="Predictive Analytics" vertex="1">
+          <mxGeometry height="55" width="130" x="660" y="340" as="geometry" />
+        </mxCell>
+        <mxCell id="r6maroon" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#6b2436;strokeColor=none;fontColor=#ffffff;fontStyle=1" value="Semantic Cache" vertex="1">
+          <mxGeometry height="50" width="140" x="60" y="430" as="geometry" />
+        </mxCell>
+        <mxCell id="r6dashed" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#cccccc;dashed=1;fontColor=#999999;fontStyle=2" value="External Knowledge Base (RAG)" vertex="1">
+          <mxGeometry height="50" width="200" x="360" y="430" as="geometry" />
+        </mxCell>
+        <mxCell id="r7c1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0a4076;strokeColor=none;fontColor=#ffffff;fontStyle=1" value="PostgreSQL" vertex="1">
+          <mxGeometry height="40" width="85" x="60" y="520" as="geometry" />
+        </mxCell>
+        <mxCell id="r7c2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0a4076;strokeColor=none;fontColor=#ffffff;fontStyle=1" value="Pinecone" vertex="1">
+          <mxGeometry height="40" width="95" x="155" y="520" as="geometry" />
+        </mxCell>
+        <mxCell id="r7c3" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0a4076;strokeColor=none;fontColor=#ffffff;fontStyle=1" value="Redis" vertex="1">
+          <mxGeometry height="40" width="105" x="260" y="520" as="geometry" />
+        </mxCell>
+        <mxCell id="r7c4" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0a4076;strokeColor=none;fontColor=#ffffff;fontStyle=1" value="S3 Bucket" vertex="1">
+          <mxGeometry height="40" width="100" x="375" y="520" as="geometry" />
+        </mxCell>
+        <mxCell id="r7c5" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0a4076;strokeColor=none;fontColor=#ffffff;fontStyle=1" value="MongoDB" vertex="1">
+          <mxGeometry height="40" width="90" x="485" y="520" as="geometry" />
+        </mxCell>
+        <mxCell id="r7c6" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0a4076;strokeColor=none;fontColor=#ffffff;fontStyle=1" value="ElasticSearch" vertex="1">
+          <mxGeometry height="40" width="95" x="585" y="520" as="geometry" />
+        </mxCell>
+        <mxCell id="r8c1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e4004;strokeColor=none;fontColor=#ffffff;fontStyle=1" value="K8s Cluster" vertex="1">
+          <mxGeometry height="45" width="180" x="60" y="580" as="geometry" />
+        </mxCell>
+        <mxCell id="r8c2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#3d3d3d;strokeColor=none;fontColor=#ffffff;fontStyle=1" value="CI/CD Pipeline (GitHub Actions)" vertex="1">
+          <mxGeometry height="45" width="220" x="260" y="580" as="geometry" />
+        </mxCell>
+        <mxCell id="r8c3" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#3d3d3d;strokeColor=none;fontColor=#ffffff;fontStyle=1" value="Monitoring (Prometheus/Grafana)" vertex="1">
+          <mxGeometry height="45" width="225" x="495" y="580" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" edge="1" parent="1" source="r1c1" target="r2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" edge="1" parent="1" source="r1c2" target="r2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e3" edge="1" parent="1" source="r1c3" target="r2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e4" edge="1" parent="1" source="r1c4" target="r2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e5" edge="1" parent="1" source="r2" target="r3c1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e6" edge="1" parent="1" source="r2" target="r3c2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e7" edge="1" parent="1" source="r2" target="r3c3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e8" edge="1" parent="1" source="r2" target="r3c4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e9" edge="1" parent="1" source="r2" target="r3c5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e10" edge="1" parent="1" source="r3c1" target="r4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e11" edge="1" parent="1" source="r3c3" target="r4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e12" edge="1" parent="1" source="r3c4" target="r4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e13" edge="1" parent="1" source="r3c5" target="r4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e14" edge="1" parent="1" source="r4" target="r5c1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e15" edge="1" parent="1" source="r4" target="r5c2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e16" edge="1" parent="1" source="r4" target="r5c3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e17" edge="1" parent="1" source="r4" target="r5c4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e18" edge="1" parent="1" source="r4" target="r5c5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e19" edge="1" parent="1" source="r5c1" target="r6maroon">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e20" edge="1" parent="1" source="r5c2" target="r6maroon">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e21" edge="1" parent="1" source="r5c3" target="r6dashed">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e22" edge="1" parent="1" source="r6maroon" target="r7c1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e23" edge="1" parent="1" source="r6dashed" target="r7c4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e24" edge="1" parent="1" source="r6dashed" target="r7c5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

@@ -1,0 +1,6 @@
+@CoreVault.Notifications_HostAddress = http://localhost:5236
+
+GET {{CoreVault.Notifications_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
