@@ -76,6 +76,7 @@ public sealed class RegisterUserCommandHandler : IRequestHandler<RegisterUserCom
             Email = user.Email!,
             FirstName = user.FirstName,
             LastName = user.LastName,
+            Role = user.Role.ToString(),
             RegisteredAt = DateTime.UtcNow,
             CorrelationId = Guid.NewGuid()
         });

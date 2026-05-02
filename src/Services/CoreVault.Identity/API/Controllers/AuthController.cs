@@ -19,7 +19,7 @@ public sealed class AuthController : ControllerBase
 
     [HttpPost("register")]
     [AllowAnonymous]
-    public async Task<IActionResult> Register([FromBody] RegisterUserCommand command,CancellationToken cancellationToken)
+    public async Task<IActionResult> Register([FromBody] RegisterUserCommand command, CancellationToken cancellationToken)
     {
         var result = await _sender.Send(command, cancellationToken);
 
@@ -32,7 +32,7 @@ public sealed class AuthController : ControllerBase
 
     [HttpPost("login")]
     [AllowAnonymous]
-    public async Task<IActionResult> Login([FromBody] LoginCommand command,CancellationToken cancellationToken)
+    public async Task<IActionResult> Login([FromBody] LoginCommand command, CancellationToken cancellationToken)
     {
         var result = await _sender.Send(command, cancellationToken);
 
@@ -54,16 +54,17 @@ public sealed class AuthController : ControllerBase
     [Authorize]
     public IActionResult Me()
     {
-      
+
         var userId = User.FindFirst("sub")?.Value ?? User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
 
         var email = User.FindFirst("email")?.Value ?? User.FindFirst(System.Security.Claims.ClaimTypes.Email)?.Value;
 
-        var role = User.FindFirst("role")?.Value  ?? User.FindFirst(System.Security.Claims.ClaimTypes.Role)?.Value;
+        var role = User.FindFirst("role")?.Value ?? User.FindFirst(System.Security.Claims.ClaimTypes.Role)?.Value;
 
         var firstName = User.FindFirst("firstName")?.Value;
         var lastName = User.FindFirst("lastName")?.Value;
 
         return Ok(new { userId, email, role, firstName, lastName });
     }
+
 }

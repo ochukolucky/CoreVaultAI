@@ -17,6 +17,10 @@ namespace CoreVault.Customer.Infrastructure.Messaging.Consumers;
 ///   Identity service has NO knowledge this consumer exists.
 ///   Customer service has NO reference to Identity service code.
 ///   They are connected only through the event contract.
+///
+/// Role filter: Only Customer role users get a customer profile.
+/// Staff accounts (Teller, BackOffice, Compliance, Admin, Fintech)
+/// are acknowledged and skipped — they do not have banking profiles.
 /// </summary>
 public sealed class UserRegisteredConsumer : BackgroundService
 {
@@ -31,10 +35,7 @@ public sealed class UserRegisteredConsumer : BackgroundService
     private const string RoutingKey = "userregistered";
     private const string DeadLetterExchange = "corevault.dlx";
 
-    public UserRegisteredConsumer(
-        IServiceScopeFactory scopeFactory,
-        IConfiguration configuration,
-        ILogger<UserRegisteredConsumer> logger)
+    public UserRegisteredConsumer(IServiceScopeFactory scopeFactory, IConfiguration configuration,ILogger<UserRegisteredConsumer> logger)
     {
         _scopeFactory = scopeFactory;
         _configuration = configuration;
@@ -107,9 +108,7 @@ public sealed class UserRegisteredConsumer : BackgroundService
         return Task.CompletedTask;
     }
 
-    private async Task OnMessageReceivedAsync(
-        object sender,
-        BasicDeliverEventArgs args)
+    private async Task OnMessageReceivedAsync(object sender, BasicDeliverEventArgs args)
     {
         var messageId = args.BasicProperties.MessageId;
 
@@ -128,6 +127,7 @@ public sealed class UserRegisteredConsumer : BackgroundService
                     PropertyNameCaseInsensitive = true
                 });
 
+            // Bad message — cannot deserialise — send to DLQ
             if (@event is null)
             {
                 _logger.LogWarning(
@@ -138,6 +138,22 @@ public sealed class UserRegisteredConsumer : BackgroundService
                     deliveryTag: args.DeliveryTag,
                     multiple: false,
                     requeue: false);
+                return;
+            }
+
+            // ── Role Filter ──────────────────────────────────────────
+            // Only Customer role users get a banking profile.
+            // Staff accounts (Teller, BackOffice, Compliance, Admin,
+            // Fintech) are system users — not bank customers.
+            // We acknowledge the message so it is not requeued —
+            // skipping is intentional, not a failure.
+            if (!string.Equals(@event.Role, "Customer", StringComparison.OrdinalIgnoreCase))
+            {
+                _logger.LogInformation(
+                    "Skipping customer profile — role is {Role} | UserId: {UserId}",
+                    @event.Role, @event.UserId);
+
+                _channel!.BasicAck(deliveryTag: args.DeliveryTag, multiple: false);
                 return;
             }
 
@@ -154,36 +170,23 @@ public sealed class UserRegisteredConsumer : BackgroundService
 
             if (result.IsSuccess)
             {
-                _logger.LogInformation(
-                    "Customer profile created | CustomerId: {CustomerId} | UserId: {UserId}",
+                _logger.LogInformation("Customer profile created | CustomerId: {CustomerId} | UserId: {UserId}",
                     result.Value.Id, @event.UserId);
 
-                _channel!.BasicAck(
-                    deliveryTag: args.DeliveryTag,
-                    multiple: false);
+                _channel!.BasicAck(deliveryTag: args.DeliveryTag, multiple: false);
             }
             else
             {
-                _logger.LogError(
-                    "Failed to create customer | Error: {Error}",
-                    result.Error);
-
-                _channel!.BasicNack(
-                    deliveryTag: args.DeliveryTag,
-                    multiple: false,
-                    requeue: true);
+                _logger.LogError("Failed to create customer | Error: {Error}", result.Error);
+                // Requeue — transient failure, worth retrying
+                _channel!.BasicNack(deliveryTag: args.DeliveryTag, multiple: false, requeue: true);
             }
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex,
-                "Exception processing UserRegisteredEvent | MessageId: {MessageId}",
-                messageId);
-
-            _channel!.BasicNack(
-                deliveryTag: args.DeliveryTag,
-                multiple: false,
-                requeue: false);
+            _logger.LogError(ex, "Exception processing UserRegisteredEvent | MessageId: {MessageId}", messageId);
+            // Do not requeue after exception — goes to DLQ
+            _channel!.BasicNack(deliveryTag: args.DeliveryTag, multiple: false, requeue: false);
         }
     }
 
