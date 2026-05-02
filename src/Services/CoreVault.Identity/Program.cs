@@ -69,12 +69,6 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
-// ── MediatR ──
-//builder.Services.AddMediatR(cfg =>
-//    cfg.RegisterServicesFromAssembly(
-//        typeof(Program).Assembly));
-
-// Use any class inside your Application project to point MediatR to the right place
 builder.Services.AddMediatR(cfg =>
     cfg.RegisterServicesFromAssembly(typeof(CoreVault.Identity.Application.Commands.Register.RegisterUserCommand).Assembly));
 

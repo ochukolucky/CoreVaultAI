@@ -1,83 +1,83 @@
 ﻿using System.Text;
 using System.Text.Json;
 using CoreVault.Contracts.Events;
-using Microsoft.Extensions.Configuration; 
 using RabbitMQ.Client;
 
 namespace CoreVault.Identity.Infrastructure.Messaging;
 
 public interface IEventPublisher
 {
-    Task PublishAsync<TEvent>(TEvent @event) where TEvent : BaseEvent;
+    Task PublishAsync<TEvent>(TEvent @event)
+        where TEvent : BaseEvent;
 }
 
-public sealed class EventPublisher : IEventPublisher, IAsyncDisposable
+/// <summary>
+/// Publishes domain events to RabbitMQ using v6.8.1 synchronous API.
+/// IModel = the channel in v6.x (renamed to IChannel in v7)
+/// </summary>
+public sealed class EventPublisher : IEventPublisher, IDisposable
 {
-    private IConnection? _connection;
-    private IChannel? _channel;
-    private readonly ConnectionFactory _factory;
+    private readonly IConnection _connection;
+    private readonly IModel _channel;
     private const string ExchangeName = "corevault.identity";
 
     public EventPublisher(IConfiguration configuration)
     {
-        // Setup factory - DispatchConsumersAsync is no longer needed
-        _factory = new ConnectionFactory
+        var factory = new ConnectionFactory
         {
             HostName = configuration["RabbitMQ:Host"] ?? "localhost",
             Port = int.Parse(configuration["RabbitMQ:Port"] ?? "5672"),
             UserName = configuration["RabbitMQ:Username"] ?? "guest",
-            Password = configuration["RabbitMQ:Password"] ?? "guest"
+            Password = configuration["RabbitMQ:Password"] ?? "guest",
+            DispatchConsumersAsync = true
         };
-    }
 
-    private async Task InitializeAsync()
-    {
-        if (_channel is not null) return;
+        _connection = factory.CreateConnection();
+        _channel = _connection.CreateModel();
 
-        // Connections and Channels are now created asynchronously
-        _connection = await _factory.CreateConnectionAsync();
-        _channel = await _connection.CreateChannelAsync();
-
-        await _channel.ExchangeDeclareAsync(
+        _channel.ExchangeDeclare(
             exchange: ExchangeName,
             type: ExchangeType.Topic,
             durable: true,
             autoDelete: false);
     }
 
-    public async Task PublishAsync<TEvent>(TEvent @event) where TEvent : BaseEvent
+    public Task PublishAsync<TEvent>(TEvent @event)
+        where TEvent : BaseEvent
     {
-        await InitializeAsync();
+        var routingKey = @event.EventType
+            .ToLower()
+            .Replace("event", string.Empty);
 
-        var routingKey = @event.EventType.ToLower().Replace("event", string.Empty);
-        var payload = JsonSerializer.Serialize(@event, @event.GetType(), new JsonSerializerOptions
-        {
-            PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-        });
+        var payload = JsonSerializer.Serialize(
+            @event,
+            @event.GetType(),
+            new JsonSerializerOptions
+            {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+            });
 
         var body = Encoding.UTF8.GetBytes(payload);
 
-        // BasicProperties are handled differently in v7
-        var props = new BasicProperties
-        {
-            Persistent = true,
-            ContentType = "application/json",
-            MessageId = @event.EventId.ToString(),
-            Timestamp = new AmqpTimestamp(DateTimeOffset.UtcNow.ToUnixTimeSeconds())
-        };
+        var properties = _channel.CreateBasicProperties();
+        properties.Persistent = true;
+        properties.ContentType = "application/json";
+        properties.MessageId = @event.EventId.ToString();
+        properties.Timestamp = new AmqpTimestamp(
+            DateTimeOffset.UtcNow.ToUnixTimeSeconds());
 
-        // BasicPublish is now BasicPublishAsync
-        await _channel!.BasicPublishAsync(
+        _channel.BasicPublish(
             exchange: ExchangeName,
             routingKey: routingKey,
-            mandatory: false,
-            basicProperties: props,
+            basicProperties: properties,
             body: body);
+
+        return Task.CompletedTask;
     }
 
-    public async ValueTask DisposeAsync()
+    public void Dispose()
     {
-        if (_channel is not null) await _channel.CloseAsync();
-        if (_connection is not null) await _connection.CloseAsync();
+        _channel?.Close();
+        _connection?.Close();
     }
 }
