@@ -13,5 +13,6 @@ public sealed record AccountOpenedEvent : BaseEvent
     public string AccountType { get; init; } = string.Empty; // Savings / Current / FixedDeposit
     public decimal InitialBalance { get; init; }
     public string Currency { get; init; } = "MYR";
+    public decimal DailyTransactionLimit { get; init; } // ← add this
     public DateTime OpenedAt { get; init; }
 }

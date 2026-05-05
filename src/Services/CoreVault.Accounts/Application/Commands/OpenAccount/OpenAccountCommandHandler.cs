@@ -60,6 +60,7 @@ public sealed class OpenAccountCommandHandler
             AccountType = account.AccountType.ToString(),
             InitialBalance = account.Balance,
             Currency = account.Currency,
+            DailyTransactionLimit = account.DailyTransactionLimit,
             OpenedAt = account.CreatedAt,
             CorrelationId = Guid.NewGuid()
         });

@@ -1,4 +1,5 @@
 ﻿using CoreVault.Accounts.Application.Commands.OpenAccount;
+using CoreVault.Accounts.Application.DTOs;
 using CoreVault.Accounts.Domain.Enums;
 using CoreVault.Accounts.Infrastructure.Persistence;
 using MediatR;
@@ -56,7 +57,7 @@ public sealed class AccountsController : ControllerBase
                 result.Error.Code,
                 result.Error.Message
             });
-    }
+        }
 
     /// <summary>Get all accounts for the authenticated customer</summary>
     [HttpGet]
@@ -152,12 +153,3 @@ public sealed class AccountsController : ControllerBase
         });
     }
 }
-
-/// <summary>
-/// Request body for opening an account.
-/// CustomerId is NOT here — it comes from the JWT token.
-/// </summary>
-public sealed record OpenAccountRequest(
-    AccountType AccountType,
-    decimal InitialDeposit
-);
